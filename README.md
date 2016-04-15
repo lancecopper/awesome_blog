@@ -12,7 +12,7 @@ www.lance123.com
 
 1. 使用aiohttp框架实现异步IO
 
-2. 这个项目中自己写了一套ORM，并没有使用sqlalchemy.
+3. 这个项目中自己写了一套ORM，并没有使用sqlalchemy.
 
 3.　部署方案
 
@@ -24,6 +24,10 @@ www.lance123.com
 ##项目结构：未完成
 
     awesome-python3-webapp/
+    +-  conf
+    |   +-  awesome
+    |   +-  awesome.conf   
+    +-  dist
     +-	www/
     |	+-	static/
     |	|	+-	css/
@@ -97,13 +101,13 @@ www.lance123.com
 
 ## api
 
-get /api/users      api_get_users
+get /api/users                      api_get_users
 
-post /api/users     api_register_user
+post /api/users                     api_register_user
 
-/api/authenticate   authenticate
+/api/authenticate                   authenticate
 
-/api/comments               api_comments
+/api/comments                       api_comments
 
 /api/blogs/{id}/comments            api_create_comment      
 
