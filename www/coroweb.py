@@ -225,5 +225,5 @@ def add_routes(app, module_name):
             method = getattr(fn, '__method__', None)
             path = getattr(fn, '__route__', None)
             if method and path:
-                #如果都有，说明使我们定义的处理方法，加到app对象里处理route中
+                #如果都有，说明是我们定义的处理方法，加到app对象里处理route中
                 add_route(app, fn)

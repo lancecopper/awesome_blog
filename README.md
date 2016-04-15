@@ -1,9 +1,13 @@
-awesome-python3-webapp
-======================
+#Awesome-Blog
 
-A python webapp tutorial.
 
-项目结构：未完成
+##特点
+1. 使用aiohttp框架实现异步IO
+2. 这个项目中自己写了一套ORM，并没有使用sqlalchemy.
+3.
+
+
+##项目结构：未完成
 
     awesome-python3-webapp/
     +-	www/
@@ -56,3 +60,27 @@ A python webapp tutorial.
     +-	.gitgore
     +-	LICENSE
     +-	README.md
+
+routers:
+
+/                   index                       blogs.html              
+/show_all_users     show_all_users()            test.html               
+/retister           register                    register.html
+/signin             signin                      signin.html
+/signout            signout                     
+/manage/blogs/create
+/manage/blogs
+/manage/users
+
+
+
+
+get /api/users      api_get_users
+post /api/users     api_register_user
+/api/authenticate   authenticate
+/api/comments               api_comments
+/api/blogs/{id}/comments            api_create_comment      
+get  /api/blogs
+post /api/blogs
+/blog/{id}
+/api/blogs/{id}

@@ -186,6 +186,47 @@ def signout(request):
     logging.info('user signed out')
     return r
 
+
+
+#管理页面
+@get('/manage/')
+def manage():
+    return 'redirect:/manage/comments'
+
+#管理评论页面
+@get('/manage/comments')
+def manage_comments(*, page='1'):
+    return {
+        '__template__': 'manage_comments.html',
+        'page_index': get_page_index(page)
+    }
+
+
+#写博客页面
+@get('/manage/blogs/create')
+def manage_create_blog():
+    return {
+        '__template__': 'manage_blog_edit.html',
+        'id': '',
+        'action': '/api/blogs'
+    }
+
+#博客管理页面
+@get('/manage/blogs')
+def manage_blogs(*, page='1'):
+    return {
+        '__template__':'manage_blogs.html',
+        'page_index':get_page_index(page)
+    }
+
+#用户管理页面
+@get('/manage/users')
+def manage_users(*, page='1'):
+    return {
+        '__template__':'manage_users.html',
+        'page_index':get_page_index(page)
+    }
+
 #注册请求
 @post('/api/users')
 def api_register_user(*, email, name, passwd):
@@ -210,7 +251,7 @@ def api_register_user(*, email, name, passwd):
     sha1_passwd = '%s:%s' % (uid, passwd)
 
     admin = False
-    if email == 'she47637370@163.com':
+    if email == 'she47637370@outlook.com':
         admin = True
 
     #创建一个用户（密码是通过sha1加密保存）
@@ -266,18 +307,6 @@ def authenticate(*, email, passwd):
     r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
     return r
 
-#管理页面
-@get('/manage/')
-def manage():
-    return 'redirect:/manage/comments'
-
-#管理评论页面
-@get('/manage/comments')
-def manage_comments(*, page='1'):
-    return {
-        '__template__': 'manage_comments.html',
-        'page_index': get_page_index(page)
-    }
 
 #根据page获取评论，注释可参考 index 函数的注释，不细写了
 @get('/api/comments')
@@ -325,31 +354,6 @@ def api_delete_comments(id, request):
     #有的话删除
     yield from c.remove()
     return dict(id=id)
-
-#写博客页面
-@get('/manage/blogs/create')
-def manage_create_blog():
-    return {
-        '__template__': 'manage_blog_edit.html',
-        'id': '',
-        'action': '/api/blogs'
-    }
-
-#博客管理页面
-@get('/manage/blogs')
-def manage_blogs(*, page='1'):
-    return {
-        '__template__':'manage_blogs.html',
-        'page_index':get_page_index(page)
-    }
-
-#用户管理页面
-@get('/manage/users')
-def manage_users(*, page='1'):
-    return {
-        '__template__':'manage_users.html',
-        'page_index':get_page_index(page)
-    }
 
 #获取博客信息
 @get('/api/blogs')

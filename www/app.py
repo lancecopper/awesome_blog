@@ -25,12 +25,12 @@ def init_jinja2(app, **kw):
     logging.info('init jinja2...')
     #初始化模板配置，包括模板运行代码的开始结束标识符，变量的开始结束标识符等
     options = dict(
-        autoescape = kw.get('autoescape', True),    #是否转义设置为True，就是在渲染模板时自动把变量中的<>&等字符转换为&lt;&gt;&amp;
-        block_start_string = kw.get('block_start_string', '{%'),    #运行代码的开始标识符
-        block_end_string = kw.get('block_end_string', '%}'),        #运行代码的结束标识符
+        autoescape = kw.get('autoescape', True),                        #是否转义设置为True，就是在渲染模板时自动把变量中的<>&等字符转换为&lt;&gt;&amp;
+        block_start_string = kw.get('block_start_string', '{%'),        #运行代码的开始标识符
+        block_end_string = kw.get('block_end_string', '%}'),            #运行代码的结束标识符
         variable_start_string = kw.get('variable_start_string', '{{'),  #变量开始标识符
         variable_end_string = kw.get('variable_end_string', '}}'),      #变量结束标识符
-        auto_reload = kw.get('auto_reload', True)   #Jinja2会在使用Template时检查模板文件的状态，如果模板有修改， 则重新加载模板。如果对性能要求较高，可以将此值设为False
+        auto_reload = kw.get('auto_reload', True)                       #Jinja2会在使用Template时检查模板文件的状态，如果模板有修改， 则重新加载模板。如果对性能要求较高，可以将此值设为False
     )
     #从参数中获取path字段，即模板文件的位置
     path = kw.get('path', None)
@@ -42,7 +42,7 @@ def init_jinja2(app, **kw):
     #这里把要加载的模板和配置传给Environment，生成Environment实例
     env = Environment(loader=FileSystemLoader(path), **options)
     #从参数取filter字段
-    # filters: 一个字典描述的filters过滤器集合, 如果非模板被加载的时候, 可以安全的添加filters或移除较早的.
+    #filters: 一个字典描述的filters过滤器集合, 如果非模板被加载的时候, 可以安全的添加filters或移除较早的.
     filters = kw.get('filters', None)
     #如果有传入的过滤器设置，则设置为env的过滤器集合
     if filters is not None:
@@ -98,13 +98,13 @@ def auth_factory(app, handler):
 
 #响应处理
 #总结下来一个请求在服务端收到后的方法调用顺序是:
-#       logger_factory->data_factory->auth_factory->response_factory->RequestHandler().__call__->get或post->handler
+#   logger_factory->data_factory->auth_factory->response_factory->RequestHandler().__call__->get或post->handler
 #那么结果处理的情况就是:
-#       由handler构造出要返回的具体对象
-#       然后在这个返回的对象上加上'__method__'和'__route__'属性，以标识别这个对象并使接下来的程序容易处理
-#       RequestHandler目的就是从URL函数中分析其需要接收的参数，从request中获取必要的参数，调用URL函数,然后把结果返回给response_factory
-#       response_factory在拿到经过处理后的对象，经过一系列对象类型和格式的判断，构造出正确web.Response对象，以正确的方式返回给客户端
-#在这个过程中，我们只用关心我们的handler的处理就好了，其他的都走统一的通道，如果需要差异化处理，就在通道中选择适合的地方添加处理代码
+#   由handler构造出要返回的具体对象
+#   然后在这个返回的对象上加上'__method__'和'__route__'属性，以标识别这个对象并使接下来的程序容易处理
+#   RequestHandler目的就是从URL函数中分析其需要接收的参数，从request中获取必要的参数，调用URL函数,然后把结果返回给response_factory
+#   response_factory在拿到经过处理后的对象，经过一系列对象类型和格式的判断，构造出正确web.Response对象，以正确的方式返回给客户端
+#   在这个过程中，我们只用关心我们的handler的处理就好了，其他的都走统一的通道，如果需要差异化处理，就在通道中选择适合的地方添加处理代码
 @asyncio.coroutine
 def response_factory(app, handler):
     @asyncio.coroutine
@@ -141,7 +141,7 @@ def response_factory(app, handler):
                 return resp
             else:
                 r['__user__'] = request.__user__
-                #如果有'__template__'为key的值，则说明要套用jinja2的模板，'__template__'Key对应的为模板网页所在位置
+                #如果有'__template__'为key的值，则说明要套用jinja2的模板，'__template__'Key对应的为模板html文件所在位置
                 resp = web.Response(body=app['__templating__'].get_template(template).render(**r).encode('utf-8'))
                 resp.content_type = 'text/html;charset=utf-8'
                 #以html的形式返回
@@ -157,7 +157,7 @@ def response_factory(app, handler):
             #或者是服务端自己定义的错误码+描述
             if isinstance(t, int) and t >= 100 and t < 600:
                 return web.Response(status = t, text= str(m))
-            # default: 默认直接以字符串输出
+            #default: 默认直接以字符串输出
             resp = web.Response(body=str(r).encode('utf-8'))
             resp.content_type = 'text/plain;charset=utf-8'
             return resp

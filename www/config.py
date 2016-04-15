@@ -3,9 +3,14 @@
 
 '''
 Configuration
+两个作用：
+一是merge，允许在生产环境下的特殊配置覆盖默认配置。
+二是将Config从原始的dict类型转化成自定义的Dict类型，Dict支持x.y的形式访问字典成员。
 '''
 
-__author__ = 'Michael Liao'
+__author__ = 'LanceCopper'
+
+
 
 import config_default
 

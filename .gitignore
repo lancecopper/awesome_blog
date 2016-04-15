@@ -3,6 +3,8 @@
 test.db
 test.txt
 sina.html
+*.*~
+*~
 
 # C extensions
 *.so
@@ -55,3 +57,6 @@ MANIFEST
 
 # Virtual environment
 venv
+
+# database script
+*.sql
